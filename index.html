@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Links</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0d0f;
+      --surface: #16161a;
+      --surface2: #1e1e24;
+      --border: rgba(255,255,255,0.07);
+      --border-hover: rgba(255,255,255,0.14);
+      --text: #e8e8ec;
+      --muted: #6b6b7a;
+      --accent: #a78bfa;
+      --accent2: #34d399;
+      --accent3: #f87171;
+      --font-display: 'Syne', sans-serif;
+      --font-mono: 'DM Mono', monospace;
+      --radius: 12px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-mono);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Grid noise texture */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .page-wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 60px 24px 80px;
+    }
+
+    /* ── Header ── */
+    header {
+      margin-bottom: 64px;
+    }
+
+    .site-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 6vw, 4rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #e8e8ec 30%, var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitle {
+      margin-top: 12px;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── Section ── */
+    .section { margin-bottom: 56px; }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .section-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      position: relative;
+      top: -1px;
+    }
+    .section-dot.people { background: var(--accent); box-shadow: 0 0 8px var(--accent); }
+    .section-dot.places { background: var(--accent2); box-shadow: 0 0 8px var(--accent2); }
+    .section-dot.others { background: var(--accent3); box-shadow: 0 0 8px var(--accent3); }
+
+    .section-count {
+      font-size: 11px;
+      color: var(--muted);
+      margin-left: auto;
+    }
+
+    /* ── Carousel ── */
+    .carousel-wrap {
+      position: relative;
+    }
+
+    .carousel {
+      display: flex;
+      gap: 14px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      padding-bottom: 12px;
+      cursor: grab;
+    }
+
+    .carousel:active { cursor: grabbing; }
+
+    .carousel::-webkit-scrollbar {
+      height: 3px;
+    }
+    .carousel::-webkit-scrollbar-track { background: var(--surface); border-radius: 2px; }
+    .carousel::-webkit-scrollbar-thumb { background: var(--border-hover); border-radius: 2px; }
+
+    /* ── Card ── */
+    .card {
+      flex: 0 0 260px;
+      scroll-snap-align: start;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.2s, transform 0.2s, background 0.2s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      border-color: var(--border-hover);
+      background: var(--surface2);
+      transform: translateY(-2px);
+    }
+
+    .card-thumb {
+      width: 100%;
+      height: 140px;
+      background: var(--surface2);
+      overflow: hidden;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .card-thumb img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    .card-thumb img.loaded { opacity: 1; }
+
+    .card-thumb-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--border-hover);
+      letter-spacing: -0.02em;
+    }
+
+    .favicon-badge {
+      position: absolute;
+      bottom: 8px;
+      left: 8px;
+      width: 22px; height: 22px;
+      border-radius: 5px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .favicon-badge img {
+      width: 14px; height: 14px;
+      object-fit: contain;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .favicon-badge img.loaded { opacity: 1; }
+
+    .card-body {
+      padding: 14px 16px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1;
+    }
+
+    .card-name {
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card-url {
+      font-size: 11px;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card-desc {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-top: 2px;
+    }
+
+    /* color accent line by category */
+    .card.people  { border-top: 2px solid rgba(167,139,250,0.4); }
+    .card.places  { border-top: 2px solid rgba(52,211,153,0.4); }
+    .card.others  { border-top: 2px solid rgba(248,113,113,0.4); }
+
+    /* ── Scroll nav ── */
+    .scroll-nav {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+      justify-content: flex-end;
+    }
+
+    .scroll-btn {
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--muted);
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .scroll-btn:hover {
+      border-color: var(--border-hover);
+      color: var(--text);
+    }
+
+    /* ── Footer ── */
+    footer {
+      margin-top: 40px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      font-size: 11px;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    @media (max-width: 600px) {
+      .page-wrap { padding: 40px 16px 60px; }
+      h1 { font-size: 2rem; }
+      .card { flex: 0 0 220px; }
+      footer { flex-direction: column; gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <header>
+    <p class="site-label">Links</p>
+    <h1>My Collection</h1>
+    <p class="subtitle">A curated list of people, places, and things worth visiting.</p>
+  </header>
+
+  <!-- People -->
+  <section class="section" id="section-people">
+    <div class="section-header">
+      <span class="section-dot people"></span>
+      <span class="section-title">People</span>
+      <span class="section-count" id="count-people"></span>
+    </div>
+    <div class="carousel-wrap">
+      <div class="carousel" id="carousel-people"></div>
+      <div class="scroll-nav">
+        <button class="scroll-btn" onclick="scroll('carousel-people',-1)" aria-label="Previous">←</button>
+        <button class="scroll-btn" onclick="scroll('carousel-people',1)" aria-label="Next">→</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Places -->
+  <section class="section" id="section-places">
+    <div class="section-header">
+      <span class="section-dot places"></span>
+      <span class="section-title">Places</span>
+      <span class="section-count" id="count-places"></span>
+    </div>
+    <div class="carousel-wrap">
+      <div class="carousel" id="carousel-places"></div>
+      <div class="scroll-nav">
+        <button class="scroll-btn" onclick="scroll('carousel-places',-1)" aria-label="Previous">←</button>
+        <button class="scroll-btn" onclick="scroll('carousel-places',1)" aria-label="Next">→</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Others -->
+  <section class="section" id="section-others">
+    <div class="section-header">
+      <span class="section-dot others"></span>
+      <span class="section-title">Others</span>
+      <span class="section-count" id="count-others"></span>
+    </div>
+    <div class="carousel-wrap">
+      <div class="carousel" id="carousel-others"></div>
+      <div class="scroll-nav">
+        <button class="scroll-btn" onclick="scroll('carousel-others',-1)" aria-label="Previous">←</button>
+        <button class="scroll-btn" onclick="scroll('carousel-others',1)" aria-label="Next">→</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>Built with HTML · No trackers</span>
+    <span id="footer-count"></span>
+  </footer>
+
+</div>
+
+<script>
+  // ─────────────────────────────────────────────────────────────
+  //  ✏️  EDIT YOUR LINKS HERE
+  // ─────────────────────────────────────────────────────────────
+
+  const people = [
+    { name: "Paul Graham",        url: "https://paulgraham.com" },
+    { name: "Maggie Appleton",    url: "https://maggieappleton.com" },
+    { name: "Simon Willison",     url: "https://simonwillison.net" },
+    { name: "Lenny Rachitsky",    url: "https://www.lennysnewsletter.com" },
+    { name: "Swyx",               url: "https://www.swyx.io" },
+  ];
+
+  const places = [
+    { name: "Hacker News",        url: "https://news.ycombinator.com" },
+    { name: "Lobsters",           url: "https://lobste.rs" },
+    { name: "Are.na",             url: "https://www.are.na" },
+    { name: "The Browser",        url: "https://thebrowser.com" },
+    { name: "Marginalia",         url: "https://search.marginalia.nu" },
+  ];
+
+  const others = [
+    { name: "Excalidraw",         url: "https://excalidraw.com" },
+    { name: "Perplexity",         url: "https://www.perplexity.ai" },
+    { name: "Obsidian",           url: "https://obsidian.md" },
+    { name: "Linear",             url: "https://linear.app" },
+    { name: "Readwise Reader",    url: "https://read.readwise.io" },
+  ];
+
+  // ─────────────────────────────────────────────────────────────
+
+  function getDomain(url) {
+    try { return new URL(url).hostname.replace(/^www\./, ''); }
+    catch { return url; }
+  }
+
+  function getInitials(name) {
+    return name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+  }
+
+  function buildCard(item, category) {
+    const domain = getDomain(item.url);
+    const initials = getInitials(item.name);
+
+    const a = document.createElement('a');
+    a.className = `card ${category}`;
+    a.href = item.url;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+
+    // Thumb
+    const thumb = document.createElement('div');
+    thumb.className = 'card-thumb';
+
+    const placeholder = document.createElement('div');
+    placeholder.className = 'card-thumb-placeholder';
+    placeholder.textContent = initials;
+    thumb.appendChild(placeholder);
+
+    // OG image via a proxy — falls back to placeholder if unavailable
+    const ogImg = document.createElement('img');
+    ogImg.alt = '';
+    ogImg.onload = () => { ogImg.classList.add('loaded'); placeholder.style.opacity = '0'; };
+    ogImg.onerror = () => {};
+    // Using a free OG screenshot service — works for GitHub Pages
+    ogImg.src = `https://v1.opengraph.11ty.dev/${encodeURIComponent(item.url)}/small/jpeg/`;
+    thumb.appendChild(ogImg);
+
+    // Favicon badge
+    const badge = document.createElement('div');
+    badge.className = 'favicon-badge';
+    const fav = document.createElement('img');
+    fav.alt = '';
+    fav.onload = () => fav.classList.add('loaded');
+    fav.onerror = () => {};
+    fav.src = `https://www.google.com/s2/favicons?domain=${domain}&sz=32`;
+    badge.appendChild(fav);
+    thumb.appendChild(badge);
+
+    a.appendChild(thumb);
+
+    // Body
+    const body = document.createElement('div');
+    body.className = 'card-body';
+
+    const name = document.createElement('div');
+    name.className = 'card-name';
+    name.textContent = item.name;
+
+    const urlEl = document.createElement('div');
+    urlEl.className = 'card-url';
+    urlEl.textContent = domain;
+
+    body.appendChild(name);
+    body.appendChild(urlEl);
+    a.appendChild(body);
+
+    return a;
+  }
+
+  function renderSection(items, carouselId, countId, category) {
+    const carousel = document.getElementById(carouselId);
+    const countEl = document.getElementById(countId);
+    countEl.textContent = `${items.length} links`;
+    items.forEach(item => carousel.appendChild(buildCard(item, category)));
+  }
+
+  renderSection(people, 'carousel-people', 'count-people', 'people');
+  renderSection(places, 'carousel-places', 'count-places', 'places');
+  renderSection(others, 'carousel-others', 'count-others', 'others');
+
+  const total = people.length + places.length + others.length;
+  document.getElementById('footer-count').textContent = `${total} links total`;
+
+  // Scroll helpers
+  function scroll(carouselId, dir) {
+    const el = document.getElementById(carouselId);
+    el.scrollBy({ left: dir * 290, behavior: 'smooth' });
+  }
+
+  // Drag to scroll
+  document.querySelectorAll('.carousel').forEach(carousel => {
+    let isDown = false, startX, scrollLeft;
+    carousel.addEventListener('mousedown', e => {
+      isDown = true; carousel.style.cursor = 'grabbing';
+      startX = e.pageX - carousel.offsetLeft;
+      scrollLeft = carousel.scrollLeft;
+    });
+    carousel.addEventListener('mouseleave', () => { isDown = false; carousel.style.cursor = 'grab'; });
+    carousel.addEventListener('mouseup', () => { isDown = false; carousel.style.cursor = 'grab'; });
+    carousel.addEventListener('mousemove', e => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - carousel.offsetLeft;
+      carousel.scrollLeft = scrollLeft - (x - startX) * 1.2;
+    });
+  });
+</script>
+</body>
+</html>
