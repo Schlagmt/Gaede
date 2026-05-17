@@ -420,35 +420,35 @@
     a.rel = 'noopener noreferrer';
 
     // Thumb
-    const thumb = document.createElement('div');
-    thumb.className = 'card-thumb';
+    // const thumb = document.createElement('div');
+    // thumb.className = 'card-thumb';
 
-    const placeholder = document.createElement('div');
-    placeholder.className = 'card-thumb-placeholder';
-    placeholder.textContent = initials;
-    thumb.appendChild(placeholder);
+    // const placeholder = document.createElement('div');
+    // placeholder.className = 'card-thumb-placeholder';
+    // placeholder.textContent = initials;
+    // thumb.appendChild(placeholder);
 
     // OG image via a proxy — falls back to placeholder if unavailable
-    const ogImg = document.createElement('img');
-    ogImg.alt = '';
-    ogImg.onload = () => { ogImg.classList.add('loaded'); placeholder.style.opacity = '0'; };
-    ogImg.onerror = () => {};
+    // const ogImg = document.createElement('img');
+    // ogImg.alt = '';
+    // ogImg.onload = () => { ogImg.classList.add('loaded'); placeholder.style.opacity = '0'; };
+    // ogImg.onerror = () => {};
     // Using a free OG screenshot service — works for GitHub Pages
     // ogImg.src = `https://v1.opengraph.11ty.dev/${encodeURIComponent(item.url)}/small/jpeg/`;
-    thumb.appendChild(ogImg);
+    // thumb.appendChild(ogImg);
 
     // Favicon badge
-    const badge = document.createElement('div');
-    badge.className = 'favicon-badge';
-    const fav = document.createElement('img');
-    fav.alt = '';
-    fav.onload = () => fav.classList.add('loaded');
-    fav.onerror = () => {};
-    fav.src = `https://www.google.com/s2/favicons?domain=${domain}&sz=32`;
-    badge.appendChild(fav);
-    thumb.appendChild(badge);
+    // const badge = document.createElement('div');
+    // badge.className = 'favicon-badge';
+    // const fav = document.createElement('img');
+    // fav.alt = '';
+    // fav.onload = () => fav.classList.add('loaded');
+    // fav.onerror = () => {};
+    // fav.src = `https://www.google.com/s2/favicons?domain=${domain}&sz=32`;
+    // badge.appendChild(fav);
+    // thumb.appendChild(badge);
 
-    a.appendChild(thumb);
+    // a.appendChild(thumb);
 
     // Body
     const body = document.createElement('div');
