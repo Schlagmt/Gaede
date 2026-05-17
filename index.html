@@ -36,7 +36,6 @@
       overflow-x: hidden;
     }
 
-    /* Grid noise texture */
     body::before {
       content: '';
       position: fixed;
@@ -52,52 +51,18 @@
     .page-wrap {
       position: relative;
       z-index: 1;
-      max-width: 1100px;
+      max-width: 700px;
       margin: 0 auto;
       padding: 60px 24px 80px;
     }
 
-    /* ── Header ── */
-    header {
-      margin-bottom: 64px;
-    }
-
-    .site-label {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: 0.2em;
-      color: var(--muted);
-      text-transform: uppercase;
-      margin-bottom: 16px;
-    }
-
-    h1 {
-      font-family: var(--font-display);
-      font-size: clamp(2.4rem, 6vw, 4rem);
-      font-weight: 800;
-      line-height: 1.05;
-      letter-spacing: -0.02em;
-      background: linear-gradient(135deg, #e8e8ec 30%, var(--accent));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .subtitle {
-      margin-top: 12px;
-      font-size: 13px;
-      color: var(--muted);
-      line-height: 1.6;
-    }
-
-    /* ── Section ── */
-    .section { margin-bottom: 56px; }
+    .section { margin-bottom: 48px; }
 
     .section-header {
       display: flex;
       align-items: baseline;
       gap: 12px;
-      margin-bottom: 20px;
+      margin-bottom: 12px;
     }
 
     .section-title {
@@ -109,255 +74,94 @@
       color: var(--muted);
     }
 
-    .section-dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      flex-shrink: 0;
-      position: relative;
-      top: -1px;
-    }
-    .section-dot.people { background: var(--accent); box-shadow: 0 0 8px var(--accent); }
-    .section-dot.places { background: var(--accent2); box-shadow: 0 0 8px var(--accent2); }
-    .section-dot.others { background: var(--accent3); box-shadow: 0 0 8px var(--accent3); }
-
     .section-count {
       font-size: 11px;
       color: var(--muted);
       margin-left: auto;
     }
 
-    /* ── Carousel ── */
-    .carousel-wrap {
-      position: relative;
-    }
-
-    .carousel {
+    .link-list {
       display: flex;
-      gap: 14px;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      scroll-behavior: smooth;
-      padding-bottom: 12px;
-      cursor: grab;
-    }
-
-    .carousel:active { cursor: grabbing; }
-
-    .carousel::-webkit-scrollbar {
-      height: 3px;
-    }
-    .carousel::-webkit-scrollbar-track { background: var(--surface); border-radius: 2px; }
-    .carousel::-webkit-scrollbar-thumb { background: var(--border-hover); border-radius: 2px; }
-
-    /* ── Card ── */
-    .card {
-      flex: 0 0 260px;
-      scroll-snap-align: start;
-      background: var(--surface);
+      flex-direction: column;
       border: 1px solid var(--border);
       border-radius: var(--radius);
       overflow: hidden;
+    }
+
+    .card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      background: var(--surface);
       text-decoration: none;
       color: var(--text);
-      transition: border-color 0.2s, transform 0.2s, background 0.2s;
-      display: flex;
-      flex-direction: column;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
     }
 
-    .card:hover {
-      border-color: var(--border-hover);
-      background: var(--surface2);
-      transform: translateY(-2px);
-    }
-
-    .card-thumb {
-      width: 100%;
-      height: 140px;
-      background: var(--surface2);
-      overflow: hidden;
-      position: relative;
-      flex-shrink: 0;
-    }
-
-    .card-thumb img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      opacity: 0;
-      transition: opacity 0.4s;
-    }
-    .card-thumb img.loaded { opacity: 1; }
-
-    .card-thumb-placeholder {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--font-display);
-      font-size: 2rem;
-      font-weight: 800;
-      color: var(--border-hover);
-      letter-spacing: -0.02em;
-    }
-
-    .favicon-badge {
-      position: absolute;
-      bottom: 8px;
-      left: 8px;
-      width: 22px; height: 22px;
-      border-radius: 5px;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .favicon-badge img {
-      width: 14px; height: 14px;
-      object-fit: contain;
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-    .favicon-badge img.loaded { opacity: 1; }
-
-    .card-body {
-      padding: 14px 16px 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      flex: 1;
-    }
+    .card:last-child { border-bottom: none; }
+    .card:hover { background: var(--surface2); }
 
     .card-name {
       font-family: var(--font-display);
       font-size: 14px;
       font-weight: 600;
-      color: var(--text);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
 
     .card-url {
       font-size: 11px;
       color: var(--muted);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .card-desc {
-      font-size: 12px;
-      color: var(--muted);
-      line-height: 1.5;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
       margin-top: 2px;
     }
 
-    /* color accent line by category */
-    .card.people  { border-top: 2px solid rgba(167,139,250,0.4); }
-    .card.places  { border-top: 2px solid rgba(52,211,153,0.4); }
-    .card.others  { border-top: 2px solid rgba(248,113,113,0.4); }
-
-    /* ── Scroll nav ── */
-    .scroll-nav {
-      display: flex;
-      gap: 8px;
-      margin-top: 10px;
-      justify-content: flex-end;
-    }
-
-    .scroll-btn {
-      width: 30px; height: 30px;
-      border-radius: 50%;
-      border: 1px solid var(--border);
-      background: var(--surface);
+    .card-arrow {
       color: var(--muted);
       font-size: 14px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: border-color 0.2s, color 0.2s;
-    }
-    .scroll-btn:hover {
-      border-color: var(--border-hover);
-      color: var(--text);
+      flex-shrink: 0;
+      margin-left: 12px;
+      transition: color 0.15s, transform 0.15s;
     }
 
-    /* ── Footer ── */
-    footer {
-      margin-top: 40px;
-      padding-top: 24px;
-      border-top: 1px solid var(--border);
-      font-size: 11px;
-      color: var(--muted);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    .card:hover .card-arrow {
+      color: var(--text);
+      transform: translateX(2px);
     }
+
+    .card.people { border-left: 2px solid rgba(167,139,250,0.5); }
+    .card.places { border-left: 2px solid rgba(52,211,153,0.5); }
+    .card.others { border-left: 2px solid rgba(248,113,113,0.5); }
 
     @media (max-width: 600px) {
       .page-wrap { padding: 40px 16px 60px; }
-      h1 { font-size: 2rem; }
-      .card { flex: 0 0 220px; }
-      footer { flex-direction: column; gap: 8px; }
     }
   </style>
 </head>
 <body>
 <div class="page-wrap">
 
-  <!-- People -->
-  <section class="section" id="section-people">
+  <section class="section">
     <div class="section-header">
-      <!-- <span class="section-dot people"></span> -->
       <span class="section-title">People</span>
       <span class="section-count" id="count-people"></span>
     </div>
-    <div class="carousel-wrap">
-      <div class="carousel" id="carousel-people"></div>
-      <div class="scroll-nav">
-        <button class="scroll-btn" onclick="scroll('carousel-people',-1)" aria-label="Previous">←</button>
-        <button class="scroll-btn" onclick="scroll('carousel-people',1)" aria-label="Next">→</button>
-      </div>
-    </div>
+    <div class="link-list" id="list-people"></div>
   </section>
 
-  <!-- Places -->
-  <section class="section" id="section-places">
+  <section class="section">
     <div class="section-header">
-      <!-- <span class="section-dot places"></span> -->
       <span class="section-title">Places</span>
       <span class="section-count" id="count-places"></span>
     </div>
-    <div class="carousel-wrap">
-      <div class="carousel" id="carousel-places"></div>
-      <div class="scroll-nav">
-        <button class="scroll-btn" onclick="scroll('carousel-places',-1)" aria-label="Previous">←</button>
-        <button class="scroll-btn" onclick="scroll('carousel-places',1)" aria-label="Next">→</button>
-      </div>
-    </div>
+    <div class="link-list" id="list-places"></div>
   </section>
 
-  <!-- Others -->
-  <section class="section" id="section-others">
+  <section class="section">
     <div class="section-header">
-      <!-- <span class="section-dot others"></span> -->
       <span class="section-title">Others</span>
       <span class="section-count" id="count-others"></span>
     </div>
-    <div class="carousel-wrap">
-      <div class="carousel" id="carousel-others"></div>
-      <div class="scroll-nav">
-        <button class="scroll-btn" onclick="scroll('carousel-others',-1)" aria-label="Previous">←</button>
-        <button class="scroll-btn" onclick="scroll('carousel-others',1)" aria-label="Next">→</button>
-      </div>
-    </div>
+    <div class="link-list" id="list-others"></div>
   </section>
 
 </div>
@@ -368,26 +172,26 @@
   // ─────────────────────────────────────────────────────────────
 
   const people = [
-    { name: "Lawrence Gaede", url: "https://photos.app.goo.gl/fLcbEAzxxCkaUb6V9" },
-    { name: "Mildred Gaede", url: "https://photos.app.goo.gl/M29aB7Kv5ARiJ9s96" },
-    { name: "Patrick Burke", url: "https://photos.app.goo.gl/m5w6VDpCVhAW7uX8A" },
-    { name: "Marylin Burke", url: "https://photos.app.goo.gl/JhYMuiGquMoVmWmM7" },
-    { name: "Kelly Burke", url: "https://photos.app.goo.gl/6ys6tD135Fps5uTu8" },
-    { name: "Molly Burke", url: "https://photos.app.goo.gl/5gKC7PJKHGRYF4z2A" },
+    { name: "Lawrence Gaede",   url: "https://photos.app.goo.gl/fLcbEAzxxCkaUb6V9" },
+    { name: "Mildred Gaede",    url: "https://photos.app.goo.gl/M29aB7Kv5ARiJ9s96" },
+    { name: "Patrick Burke",    url: "https://photos.app.goo.gl/m5w6VDpCVhAW7uX8A" },
+    { name: "Marylin Burke",    url: "https://photos.app.goo.gl/JhYMuiGquMoVmWmM7" },
+    { name: "Kelly Burke",      url: "https://photos.app.goo.gl/6ys6tD135Fps5uTu8" },
+    { name: "Molly Burke",      url: "https://photos.app.goo.gl/5gKC7PJKHGRYF4z2A" },
     { name: "Patrick Burke Jr", url: "https://photos.app.goo.gl/fTfQxh6DMHWYK3eG9" },
   ];
 
   const places = [
-    { name: "Banff", url: "https://photos.app.goo.gl/4VM3UeGD6HyfbgCQ7" },
-    { name: "Cincinnati", url: "https://photos.app.goo.gl/43jgqzBwy3BcAtgt6" },
-    { name: "DC", url: "https://photos.app.goo.gl/o8ugNJhcWAjNEgJy7" },
-    { name: "Europe", url: "https://photos.app.goo.gl/5XfM9a1yDQ3pqXAd6" },
-    { name: "Florida", url: "https://photos.app.goo.gl/EEycFY7SYAbzhMjGA" },
-    { name: "Mexico", url: "https://photos.app.goo.gl/JXFEm5jkj9p8H7N26" },
-    { name: "New Orleans", url: "https://photos.app.goo.gl/asJGWHcCyRfwpBUe9" },
-    { name: "Red River Gorge", url: "https://photos.app.goo.gl/VAD1edwbr8FenJVFA" },
-    { name: "Seattle", url: "https://photos.app.goo.gl/2Tk1tn2s6CDrz8Mt9" },
-    { name: "Yellowstone", url: "https://photos.app.goo.gl/fa3yzPY1gfWKuPqf8" },
+    { name: "Banff",            url: "https://photos.app.goo.gl/4VM3UeGD6HyfbgCQ7" },
+    { name: "Cincinnati",       url: "https://photos.app.goo.gl/43jgqzBwy3BcAtgt6" },
+    { name: "DC",               url: "https://photos.app.goo.gl/o8ugNJhcWAjNEgJy7" },
+    { name: "Europe",           url: "https://photos.app.goo.gl/5XfM9a1yDQ3pqXAd6" },
+    { name: "Florida",          url: "https://photos.app.goo.gl/EEycFY7SYAbzhMjGA" },
+    { name: "Mexico",           url: "https://photos.app.goo.gl/JXFEm5jkj9p8H7N26" },
+    { name: "New Orleans",      url: "https://photos.app.goo.gl/asJGWHcCyRfwpBUe9" },
+    { name: "Red River Gorge",  url: "https://photos.app.goo.gl/VAD1edwbr8FenJVFA" },
+    { name: "Seattle",          url: "https://photos.app.goo.gl/2Tk1tn2s6CDrz8Mt9" },
+    { name: "Yellowstone",      url: "https://photos.app.goo.gl/fa3yzPY1gfWKuPqf8" },
   ];
 
   const others = [
@@ -401,54 +205,14 @@
     catch { return url; }
   }
 
-  function getInitials(name) {
-    return name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
-  }
-
   function buildCard(item, category) {
-    const domain = getDomain(item.url);
-    const initials = getInitials(item.name);
-
     const a = document.createElement('a');
     a.className = `card ${category}`;
     a.href = item.url;
     a.target = '_blank';
     a.rel = 'noopener noreferrer';
 
-    // Thumb
-    // const thumb = document.createElement('div');
-    // thumb.className = 'card-thumb';
-
-    // const placeholder = document.createElement('div');
-    // placeholder.className = 'card-thumb-placeholder';
-    // placeholder.textContent = initials;
-    // thumb.appendChild(placeholder);
-
-    // OG image via a proxy — falls back to placeholder if unavailable
-    // const ogImg = document.createElement('img');
-    // ogImg.alt = '';
-    // ogImg.onload = () => { ogImg.classList.add('loaded'); placeholder.style.opacity = '0'; };
-    // ogImg.onerror = () => {};
-    // Using a free OG screenshot service — works for GitHub Pages
-    // ogImg.src = `https://v1.opengraph.11ty.dev/${encodeURIComponent(item.url)}/small/jpeg/`;
-    // thumb.appendChild(ogImg);
-
-    // Favicon badge
-    // const badge = document.createElement('div');
-    // badge.className = 'favicon-badge';
-    // const fav = document.createElement('img');
-    // fav.alt = '';
-    // fav.onload = () => fav.classList.add('loaded');
-    // fav.onerror = () => {};
-    // fav.src = `https://www.google.com/s2/favicons?domain=${domain}&sz=32`;
-    // badge.appendChild(fav);
-    // thumb.appendChild(badge);
-
-    // a.appendChild(thumb);
-
-    // Body
-    const body = document.createElement('div');
-    body.className = 'card-body';
+    const left = document.createElement('div');
 
     const name = document.createElement('div');
     name.className = 'card-name';
@@ -456,52 +220,30 @@
 
     const urlEl = document.createElement('div');
     urlEl.className = 'card-url';
-    urlEl.textContent = domain;
+    urlEl.textContent = getDomain(item.url);
 
-    body.appendChild(name);
-    body.appendChild(urlEl);
-    a.appendChild(body);
+    left.appendChild(name);
+    left.appendChild(urlEl);
 
+    const arrow = document.createElement('span');
+    arrow.className = 'card-arrow';
+    arrow.textContent = '→';
+
+    a.appendChild(left);
+    a.appendChild(arrow);
     return a;
   }
 
-  function renderSection(items, carouselId, countId, category) {
-    const carousel = document.getElementById(carouselId);
+  function renderSection(items, listId, countId, category) {
+    const list = document.getElementById(listId);
     const countEl = document.getElementById(countId);
     countEl.textContent = `${items.length} links`;
-    items.forEach(item => carousel.appendChild(buildCard(item, category)));
+    items.forEach(item => list.appendChild(buildCard(item, category)));
   }
 
-  renderSection(people, 'carousel-people', 'count-people', 'people');
-  renderSection(places, 'carousel-places', 'count-places', 'places');
-  renderSection(others, 'carousel-others', 'count-others', 'others');
-
-  const total = people.length + places.length + others.length;
-  document.getElementById('footer-count').textContent = `${total} links total`;
-
-  // Scroll helpers
-  function scroll(carouselId, dir) {
-    const el = document.getElementById(carouselId);
-    el.scrollBy({ left: dir * 290, behavior: 'smooth' });
-  }
-
-  // Drag to scroll
-  document.querySelectorAll('.carousel').forEach(carousel => {
-    let isDown = false, startX, scrollLeft;
-    carousel.addEventListener('mousedown', e => {
-      isDown = true; carousel.style.cursor = 'grabbing';
-      startX = e.pageX - carousel.offsetLeft;
-      scrollLeft = carousel.scrollLeft;
-    });
-    carousel.addEventListener('mouseleave', () => { isDown = false; carousel.style.cursor = 'grab'; });
-    carousel.addEventListener('mouseup', () => { isDown = false; carousel.style.cursor = 'grab'; });
-    carousel.addEventListener('mousemove', e => {
-      if (!isDown) return;
-      e.preventDefault();
-      const x = e.pageX - carousel.offsetLeft;
-      carousel.scrollLeft = scrollLeft - (x - startX) * 1.2;
-    });
-  });
+  renderSection(people, 'list-people', 'count-people', 'people');
+  renderSection(places, 'list-places', 'count-places', 'places');
+  renderSection(others, 'list-others', 'count-others', 'others');
 </script>
 </body>
 </html>
