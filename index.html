@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gaede Photos</title>
+  <title>Burke & Gaede Home Photos</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -21,6 +21,7 @@
       --accent: #a78bfa;
       --accent2: #34d399;
       --accent3: #f87171;
+      --accent4: #fb923c;
       --font-display: 'Syne', sans-serif;
       --font-mono: 'DM Mono', monospace;
       --radius: 12px;
@@ -131,6 +132,7 @@
     .card.people { border-left: 2px solid rgba(167,139,250,0.5); }
     .card.places { border-left: 2px solid rgba(52,211,153,0.5); }
     .card.others { border-left: 2px solid rgba(248,113,113,0.5); }
+    .card.videos { border-left: 2px solid rgba(251,146,60,0.5); }
 
     @media (max-width: 600px) {
       .page-wrap { padding: 40px 16px 60px; }
@@ -139,6 +141,14 @@
 </head>
 <body>
 <div class="page-wrap">
+
+  <section class="section">
+    <div class="section-header">
+      <span class="section-title">Videos</span>
+      <span class="section-count" id="count-videos"></span>
+    </div>
+    <div class="link-list" id="list-videos"></div>
+  </section>
 
   <section class="section">
     <div class="section-header">
@@ -163,7 +173,6 @@
     </div>
     <div class="link-list" id="list-others"></div>
   </section>
-
 </div>
 
 <script>
@@ -188,24 +197,38 @@
     { name: "DC",               url: "https://photos.app.goo.gl/o8ugNJhcWAjNEgJy7" },
     { name: "Europe",           url: "https://photos.app.goo.gl/5XfM9a1yDQ3pqXAd6" },
     { name: "Florida",          url: "https://photos.app.goo.gl/EEycFY7SYAbzhMjGA" },
-    { name: "Lake Cumberland" , url: "https://photos.app.goo.gl/BUKELjPQ2P5zSDCv6" },
-    { name: "Mammoth Cave", url: "https://photos.app.goo.gl/3RUpiPm5kM6UZzmz9" },
+    { name: "Lake Cumberland",  url: "https://photos.app.goo.gl/BUKELjPQ2P5zSDCv6" },
+    { name: "Mammoth Cave",     url: "https://photos.app.goo.gl/3RUpiPm5kM6UZzmz9" },
     { name: "Mexico",           url: "https://photos.app.goo.gl/JXFEm5jkj9p8H7N26" },
     { name: "New Orleans",      url: "https://photos.app.goo.gl/asJGWHcCyRfwpBUe9" },
-    { name: "New York", url: "https://photos.app.goo.gl/MR3SphkRo1LeCiSK8" },
+    { name: "New York",         url: "https://photos.app.goo.gl/MR3SphkRo1LeCiSK8" },
     { name: "Red River Gorge",  url: "https://photos.app.goo.gl/VAD1edwbr8FenJVFA" },
     { name: "Seattle",          url: "https://photos.app.goo.gl/2Tk1tn2s6CDrz8Mt9" },
-    { name: "Texas", url: "https://photos.app.goo.gl/jHU3RpuzraA72yQj6" },
+    { name: "Texas",            url: "https://photos.app.goo.gl/jHU3RpuzraA72yQj6" },
     { name: "Yellowstone",      url: "https://photos.app.goo.gl/fa3yzPY1gfWKuPqf8" },
   ];
 
   const others = [
-    { name: "All", url: "https://photos.app.goo.gl/BoSRVu58EiXbhz537" },
+    { name: "All",    url: "https://photos.app.goo.gl/BoSRVu58EiXbhz537" },
     { name: "Babies", url: "https://photos.app.goo.gl/CzYkqXN72tiyjnAj8" },
     { name: "Church", url: "https://photos.app.goo.gl/dpriVTaFMyFLr4n29" },
     { name: "Cities", url: "https://photos.app.goo.gl/2DmpSfnWkfMhMYARA" },
-    { name: "Kids", url: "https://photos.app.goo.gl/6Kn7xSTNQ6nQUWh5A" },
+    { name: "Kids",   url: "https://photos.app.goo.gl/6Kn7xSTNQ6nQUWh5A" },
     { name: "Sports", url: "https://photos.app.goo.gl/zePABSYazvTghP5G7" },
+  ];
+
+  const videos = [
+    { name: "Alaska (1994)", url: "https://youtu.be/qDrkMLEnAxo" },
+    { name: "Christmas (1987)", url: "https://youtu.be/WBCdtHk3EbY" },
+    { name: "Easter", url: "https://youtu.be/ynArryOsu0Q" },
+    { name: "Grandkids (2000-2004)", url: "https://youtu.be/XWlEXE2A42Y" },
+    { name: "Grandkids (2001-2007)", url: "https://youtu.be/zJhkAJn3Wew" },
+    { name: "Fairbank's House (1995)", url: "https://youtu.be/mKopA2GaNJ0" },
+    { name: "Joe & Emma Gaede's 50th Anniversary", url: "https://youtu.be/qRi0HEQxngc" },
+    { name: "Kelly's House (1998)", url: "https://youtu.be/0eKuCj4THcQ" },
+    { name: "Mildred's House (1988)", url: "https://youtu.be/-k9IHgONv2Y" },
+    { name: "Molly's House (2003)", url: "https://youtu.be/pU8nBm1xDDM" },
+    { name: "Retirement Party (1994)", url: "https://youtu.be/niZhhmnr0Nc" }
   ];
 
   // ─────────────────────────────────────────────────────────────
@@ -251,6 +274,7 @@
     items.forEach(item => list.appendChild(buildCard(item, category)));
   }
 
+  renderSection(videos, 'list-videos', 'count-videos', 'videos');
   renderSection(people, 'list-people', 'count-people', 'people');
   renderSection(places, 'list-places', 'count-places', 'places');
   renderSection(others, 'list-others', 'count-others', 'others');
